@@ -1,0 +1,25 @@
+import matplotlib
+# matplotlib.use("Agg")
+%matplotlib inline
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sn
+from sklearn.datasets import fetch_california_housing
+
+df = pd.read_csv("California_housing.csv")
+
+df.hist(bins=30, figsize=(10, 15))
+plt.suptitle("Histograms of california housing features", y=1.02)
+# plt.savefig("histogram.png")
+plt.show()
+plt.close()
+
+plt.figure(figsize=(12, 8))
+sn.boxplot(data=df)
+plt.title("Boxplot of california housing features")
+plt.xlabel("Features")
+plt.ylabel("Values")
+# plt.savefig("boxplot.png")
+plt.show()
+plt.close()
