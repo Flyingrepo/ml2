@@ -1,0 +1,27 @@
+import matplotlib
+# matplotlib.use("Agg")
+%matplotlib inline
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from sklearn.datasets import fetch_california_housing
+
+# df = pd.read_csv("California_housing.csv")
+
+df.head()
+
+corr_matrix = df.corr()
+# print("Correlation matrix: ", corr_matrix)
+
+plt.figure(figsize=(12, 8))
+sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f")
+plt.title("Correlation matrix for california housing features")
+plt.show()
+plt.close()
+
+#pair plot
+g=sns.pairplot(df)
+g.fig.suptitle("Pairplot of california", y=1.02)
+plt.show()
+plt.close()
