@@ -1,0 +1,31 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+df = pd.read_csv(r'iris.csv')
+
+df.columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
+
+X = df[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]
+y = df['species']
+
+pca = PCA(n_components=3)
+X_r = pca.fit_transform(X)
+
+print("Explained variance ratio:", pca.explained_variance_ratio_)
+
+colors = {'Iris-setosa': 'navy', 'Iris-versicolor': 'turquoise', 'Iris-virginica': 'darkorange'}
+
+plt.figure(figsize=(8, 6))
+for species in df['species'].unique():
+    idx = df['species'] == species
+    plt.scatter(X_r[idx, 0], X_r[idx, 1], c=colors.get(species),     label=species, edgecolor='k', s=50)
+
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.title('PCA of IRIS Dataset')
+plt.legend(loc='best')
+# plt.grid(True)
+plt.show()
+plt.savefig("pca2.jpeg")
+plt.close()
