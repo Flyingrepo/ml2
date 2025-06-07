@@ -1,0 +1,63 @@
+import random
+# random.seed(000)
+datapoints=[]
+for i in range(100):
+    n=random.random();
+    n=round(n,3)
+    datapoints.append(n)
+
+from sklearn.neighbors import KNeighborsClassifier
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+targetresult=[]
+for data in datapoints:
+    if(data<=0.5):
+        targetresult.append(1)
+    else:
+        targetresult.append(2)
+
+train_data=datapoints[:50]
+train_result=targetresult[:50]
+test_data=datapoints[50:]
+test_result=targetresult[50:]
+train_data=np.array(train_data).reshape(-1,1)
+test_data=np.array(test_data).reshape(-1,1)
+train_result=np.array(train_result)
+test_result=np.array(test_result)
+
+knn=KNeighborsClassifier(n_neighbors=1)
+knn.fit(train_data,train_result)
+print(knn.score(test_data,test_result))
+
+
+score=[]
+kValue=[]
+for k in [1,2,3,4,5,20,30]:
+    knn=KNeighborsClassifier(n_neighbors=k)
+    knn.fit(train_data,train_result)
+    score.append(knn.score(test_data,test_result))
+    kValue.append(k)
+
+plt.figure()
+plt.plot(kValue,score)
+plt.title('KNN Classfier accuracy - test data')
+plt.xlabel('K-value')
+plt.ylabel('accuracy')
+plt.show()
+
+score=[]  
+kValue=[]
+for k in [1,2,3,4,5,20,30]:
+     knn=KNeighborsClassifier(n_neighbors=k)
+     knn.fit(train_data,train_result)
+     score.append(knn.score(train_data,train_result))
+     kValue.append(k)
+
+ plt.figure()
+ plt.plot(kValue,score)
+ plt.title('KNN Classfier accuracy - train data')
+ plt.xlabel('K-value')
+ plt.ylabel('accuracy')
+ plt.show()
